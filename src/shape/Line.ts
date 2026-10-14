@@ -33,6 +33,10 @@ export class Line extends Shape {
     return { x1: this.x1, y1: this.y1, x2: this.x2, y2: this.y2 };
   }
 
+  treeDetail(): string {
+    return `(${this.formatNumber(this.x1)},${this.formatNumber(this.y1)}) -> (${this.formatNumber(this.x2)},${this.formatNumber(this.y2)})`;
+  }
+
   location(): string {
     return `(${this.formatNumber(this.x1)},${this.formatNumber(this.y1)})`;
   }

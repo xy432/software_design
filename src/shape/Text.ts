@@ -28,6 +28,10 @@ export class Text extends Shape {
     return { x: this.x, y: this.y, text: this.content };
   }
 
+  treeDetail(): string {
+    return `(${this.formatNumber(this.x)},${this.formatNumber(this.y)}) "${this.content}"`;
+  }
+
   location(): string {
     return `(${this.formatNumber(this.x)},${this.formatNumber(this.y)})`;
   }

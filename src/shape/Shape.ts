@@ -68,6 +68,13 @@ export abstract class Shape {
 
   abstract location(): string;
 
+  abstract treeDetail(): string;
+
+  protected fillSuffix(): string {
+    const fill = this.getFill();
+    return fill === undefined ? "" : ` fill=${fill}`;
+  }
+
   abstract restoreSnapshot(values: Record<string, number | string>): void;
 
   clearAttribute(name: string): void {

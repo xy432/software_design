@@ -31,6 +31,10 @@ export class Rect extends Shape {
     return { x: this.x, y: this.y, width: this.width, height: this.height };
   }
 
+  treeDetail(): string {
+    return `x=${this.formatNumber(this.x)} y=${this.formatNumber(this.y)} w=${this.formatNumber(this.width)} h=${this.formatNumber(this.height)}${this.fillSuffix()}`;
+  }
+
   location(): string {
     return `(${this.formatNumber(this.x)},${this.formatNumber(this.y)})`;
   }

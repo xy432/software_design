@@ -1,9 +1,11 @@
+import { AddToCommand } from "./AddToCommand";
 import { BackCommand } from "./BackCommand";
 import { CanvasCommand } from "./CanvasCommand";
 import { Command } from "./Command";
 import { CreateCommand } from "./CreateCommand";
 import { DeleteCommand } from "./DeleteCommand";
 import { FrontCommand } from "./FrontCommand";
+import { GroupCommand } from "./GroupCommand";
 import { HelpCommand } from "./HelpCommand";
 import { InitCommand } from "./InitCommand";
 import { MoveCommand } from "./MoveCommand";
@@ -12,7 +14,10 @@ import { RedoCommand } from "./RedoCommand";
 import { SaveCommand } from "./SaveCommand";
 import { ScaleCommand } from "./ScaleCommand";
 import { SetCommand } from "./SetCommand";
+import { ShowCommand } from "./ShowCommand";
+import { TreeCommand } from "./TreeCommand";
 import { UndoCommand } from "./UndoCommand";
+import { UngroupCommand } from "./UngroupCommand";
 
 export class CommandRegistry {
   // 按命令名创建命令。这是全程序两处名字分派之一，后续应改为注册表，避免在这里继续加分支。
@@ -29,6 +34,11 @@ export class CommandRegistry {
     ["set", (tokens) => new SetCommand(tokens)],
     ["front", (tokens) => new FrontCommand(tokens)],
     ["back", (tokens) => new BackCommand(tokens)],
+    ["group", (tokens) => new GroupCommand(tokens)],
+    ["ungroup", (tokens) => new UngroupCommand(tokens)],
+    ["addto", (tokens) => new AddToCommand(tokens)],
+    ["tree", (tokens) => new TreeCommand(tokens)],
+    ["show", (tokens) => new ShowCommand(tokens)],
     ["undo", () => new UndoCommand()],
     ["redo", () => new RedoCommand()],
   ]);
