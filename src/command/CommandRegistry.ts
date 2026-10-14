@@ -1,5 +1,7 @@
 import { CanvasCommand } from "./CanvasCommand";
 import { Command } from "./Command";
+import { CreateCommand } from "./CreateCommand";
+import { DeleteCommand } from "./DeleteCommand";
 import { HelpCommand } from "./HelpCommand";
 import { InitCommand } from "./InitCommand";
 import { ReadCommand } from "./ReadCommand";
@@ -15,6 +17,8 @@ export class CommandRegistry {
     ["read", (tokens) => new ReadCommand(tokens)],
     ["save", (tokens) => new SaveCommand(tokens)],
     ["canvas", (tokens) => new CanvasCommand(tokens)],
+    ["create", (tokens) => new CreateCommand(tokens)],
+    ["delete", (tokens) => new DeleteCommand(tokens)],
     ["undo", () => new UndoCommand()],
     ["redo", () => new RedoCommand()],
   ]);
