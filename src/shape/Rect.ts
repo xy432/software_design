@@ -31,6 +31,17 @@ export class Rect extends Shape {
     return { x: this.x, y: this.y, width: this.width, height: this.height };
   }
 
+  location(): string {
+    return `(${this.formatNumber(this.x)},${this.formatNumber(this.y)})`;
+  }
+
+  restoreSnapshot(values: Record<string, number | string>): void {
+    this.x = this.asNumber(values.x);
+    this.y = this.asNumber(values.y);
+    this.width = this.asNumber(values.width);
+    this.height = this.asNumber(values.height);
+  }
+
   toSvg(indent: string): string {
     return `${indent}<rect id="${this.escapeXml(this.getId())}" x="${this.formatNumber(this.x)}" y="${this.formatNumber(this.y)}" width="${this.formatNumber(this.width)}" height="${this.formatNumber(this.height)}"${this.presentationAttributes()}/>`;
   }

@@ -31,6 +31,17 @@ export class Ellipse extends Shape {
     return { cx: this.cx, cy: this.cy, rx: this.rx, ry: this.ry };
   }
 
+  location(): string {
+    return `(${this.formatNumber(this.cx)},${this.formatNumber(this.cy)})`;
+  }
+
+  restoreSnapshot(values: Record<string, number | string>): void {
+    this.cx = this.asNumber(values.cx);
+    this.cy = this.asNumber(values.cy);
+    this.rx = this.asNumber(values.rx);
+    this.ry = this.asNumber(values.ry);
+  }
+
   toSvg(indent: string): string {
     return `${indent}<ellipse id="${this.escapeXml(this.getId())}" cx="${this.formatNumber(this.cx)}" cy="${this.formatNumber(this.cy)}" rx="${this.formatNumber(this.rx)}" ry="${this.formatNumber(this.ry)}"${this.presentationAttributes()}/>`;
   }

@@ -1,12 +1,17 @@
+import { BackCommand } from "./BackCommand";
 import { CanvasCommand } from "./CanvasCommand";
 import { Command } from "./Command";
 import { CreateCommand } from "./CreateCommand";
 import { DeleteCommand } from "./DeleteCommand";
+import { FrontCommand } from "./FrontCommand";
 import { HelpCommand } from "./HelpCommand";
 import { InitCommand } from "./InitCommand";
+import { MoveCommand } from "./MoveCommand";
 import { ReadCommand } from "./ReadCommand";
 import { RedoCommand } from "./RedoCommand";
 import { SaveCommand } from "./SaveCommand";
+import { ScaleCommand } from "./ScaleCommand";
+import { SetCommand } from "./SetCommand";
 import { UndoCommand } from "./UndoCommand";
 
 export class CommandRegistry {
@@ -19,6 +24,11 @@ export class CommandRegistry {
     ["canvas", (tokens) => new CanvasCommand(tokens)],
     ["create", (tokens) => new CreateCommand(tokens)],
     ["delete", (tokens) => new DeleteCommand(tokens)],
+    ["move", (tokens) => new MoveCommand(tokens)],
+    ["scale", (tokens) => new ScaleCommand(tokens)],
+    ["set", (tokens) => new SetCommand(tokens)],
+    ["front", (tokens) => new FrontCommand(tokens)],
+    ["back", (tokens) => new BackCommand(tokens)],
     ["undo", () => new UndoCommand()],
     ["redo", () => new RedoCommand()],
   ]);

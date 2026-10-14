@@ -62,6 +62,37 @@ export class SvgDocument {
     parent.insertChildAt(at, shape);
   }
 
+  moveToIndex(shape: Shape, index: number): number {
+    if (!this.index.has(shape.getId())) {
+      throw new Error(`no such shape: ${shape.getId()}`);
+    }
+    const parent = shape.getParent();
+    if (parent instanceof Group) {
+      return parent.moveChild(shape, index);
+    }
+    const oldIndex = this.roots.indexOf(shape);
+    this.roots.splice(oldIndex, 1);
+    const at = Math.min(Math.max(index, 0), this.roots.length);
+    this.roots.splice(at, 0, shape);
+    return oldIndex;
+  }
+
+  siblingIndex(shape: Shape): number {
+    const parent = shape.getParent();
+    if (parent instanceof Group) {
+      return parent.getChildren().indexOf(shape);
+    }
+    return this.roots.indexOf(shape);
+  }
+
+  siblingCount(shape: Shape): number {
+    const parent = shape.getParent();
+    if (parent instanceof Group) {
+      return parent.getChildren().length;
+    }
+    return this.roots.length;
+  }
+
   detach(shape: Shape): { parent: Group | null; index: number } {
     if (!this.index.has(shape.getId())) {
       throw new Error(`no such shape: ${shape.getId()}`);

@@ -28,6 +28,19 @@ export class Text extends Shape {
     return { x: this.x, y: this.y, text: this.content };
   }
 
+  location(): string {
+    return `(${this.formatNumber(this.x)},${this.formatNumber(this.y)})`;
+  }
+
+  restoreSnapshot(values: Record<string, number | string>): void {
+    this.x = this.asNumber(values.x);
+    this.y = this.asNumber(values.y);
+    const content = values.text;
+    if (typeof content === "string") {
+      this.content = content;
+    }
+  }
+
   toSvg(indent: string): string {
     return `${indent}<text id="${this.escapeXml(this.getId())}" x="${this.formatNumber(this.x)}" y="${this.formatNumber(this.y)}"${this.presentationAttributes()}>${this.escapeXml(this.content)}</text>`;
   }
