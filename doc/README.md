@@ -6,54 +6,11 @@
 
 程序按职责分成六个模块。图形本身不知道命令和文件；命令不知道终端怎么读行。
 
-```plantuml
-@startuml
-package cli {
-  class CliRepl
-}
-package app {
-  class EditorSession
-  class CommandLineParser
-  class HelpText
-}
-package command {
-  class Command
-  class CommandHistory
-  class CommandRegistry
-}
-package io {
-  class SvgReader
-  class SvgWriter
-}
-package document {
-  class SvgDocument
-}
-package shape {
-  abstract class Shape
-  class Group
-  class Rect
-  class Circle
-  class Ellipse
-  class Line
-  class Text
-  class ShapeFactory
-}
+下面这张包图表示模块依赖。类放在各自的包里，`Group` 和叶子类对 `Shape` 的泛化画在 `shape` 包内部。
 
-cli --> app
-app --> command
-command --> document
-command --> io
-document --> shape
-io --> document
-io --> shape
-Group --|> Shape
-Rect --|> Shape
-Circle --|> Shape
-Ellipse --|> Shape
-Line --|> Shape
-Text --|> Shape
-@enduml
-```
+![模块包图](architecture.png)
+
+图例：带折角的方框是包，其中的方框是类或接口。虚线开放箭头表示依赖，指向被依赖方。实线空心三角表示泛化，指向父类。`Shape` 是抽象类，名称用斜体。`Command` 为 `«interface»`。
 
 | 模块 | 目录 | 职责 |
 |---|---|---|
