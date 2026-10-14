@@ -33,6 +33,10 @@ export class Line extends Shape {
     return { x1: this.x1, y1: this.y1, x2: this.x2, y2: this.y2 };
   }
 
+  toSvg(indent: string): string {
+    return `${indent}<line id="${this.escapeXml(this.getId())}" x1="${this.formatNumber(this.x1)}" y1="${this.formatNumber(this.y1)}" x2="${this.formatNumber(this.x2)}" y2="${this.formatNumber(this.y2)}"${this.presentationAttributes()}/>`;
+  }
+
   protected applyGeometry(name: string, value: string): boolean {
     const parsed = this.parseNumber(value);
     if (name === "x1") {

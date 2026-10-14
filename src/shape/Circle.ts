@@ -29,6 +29,10 @@ export class Circle extends Shape {
     return { cx: this.cx, cy: this.cy, r: this.r };
   }
 
+  toSvg(indent: string): string {
+    return `${indent}<circle id="${this.escapeXml(this.getId())}" cx="${this.formatNumber(this.cx)}" cy="${this.formatNumber(this.cy)}" r="${this.formatNumber(this.r)}"${this.presentationAttributes()}/>`;
+  }
+
   protected applyGeometry(name: string, value: string): boolean {
     const parsed = this.parseNumber(value);
     if (name === "cx") {

@@ -31,6 +31,10 @@ export class Ellipse extends Shape {
     return { cx: this.cx, cy: this.cy, rx: this.rx, ry: this.ry };
   }
 
+  toSvg(indent: string): string {
+    return `${indent}<ellipse id="${this.escapeXml(this.getId())}" cx="${this.formatNumber(this.cx)}" cy="${this.formatNumber(this.cy)}" rx="${this.formatNumber(this.rx)}" ry="${this.formatNumber(this.ry)}"${this.presentationAttributes()}/>`;
+  }
+
   protected applyGeometry(name: string, value: string): boolean {
     const parsed = this.parseNumber(value);
     if (name === "cx") {

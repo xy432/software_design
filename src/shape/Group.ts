@@ -46,6 +46,15 @@ export class Group extends Shape {
     return {};
   }
 
+  toSvg(indent: string): string {
+    const open = `${indent}<g id="${this.escapeXml(this.getId())}"${this.presentationAttributes()}`;
+    if (this.children.length === 0) {
+      return `${open}/>`;
+    }
+    const body = this.children.map((child) => child.toSvg(`${indent}  `)).join("\n");
+    return `${open}>\n${body}\n${indent}</g>`;
+  }
+
   protected applyGeometry(_name: string, _value: string): boolean {
     return false;
   }

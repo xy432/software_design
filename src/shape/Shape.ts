@@ -64,6 +64,8 @@ export abstract class Shape {
 
   abstract snapshot(): Record<string, number | string>;
 
+  abstract toSvg(indent: string): string;
+
   protected abstract applyGeometry(name: string, value: string): boolean;
 
   protected abstract readGeometry(name: string): string | undefined;
@@ -74,6 +76,36 @@ export abstract class Shape {
       throw new Error(`invalid number: ${value}`);
     }
     return parsed;
+  }
+
+  protected formatNumber(value: number): string {
+    const rounded = Math.round(value * 1e6) / 1e6;
+    return String(rounded);
+  }
+
+  protected escapeXml(value: string): string {
+    return value
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;");
+  }
+
+  protected presentationAttributes(): string {
+    const parts: string[] = [];
+    const fill = this.getFill();
+    const stroke = this.getStroke();
+    const strokeWidth = this.getStrokeWidth();
+    if (fill !== undefined) {
+      parts.push(`fill="${this.escapeXml(fill)}"`);
+    }
+    if (stroke !== undefined) {
+      parts.push(`stroke="${this.escapeXml(stroke)}"`);
+    }
+    if (strokeWidth !== undefined) {
+      parts.push(`stroke-width="${this.escapeXml(strokeWidth)}"`);
+    }
+    return parts.length === 0 ? "" : ` ${parts.join(" ")}`;
   }
 
   private applyPresentation(name: string, value: string): boolean {
