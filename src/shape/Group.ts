@@ -15,6 +15,23 @@ export class Group extends Shape {
     return this.children;
   }
 
+  location(): string {
+    return "";
+  }
+
+  restoreSnapshot(_values: Record<string, number | string>): void {}
+
+  moveChild(child: Shape, index: number): number {
+    const oldIndex = this.children.indexOf(child);
+    if (oldIndex < 0) {
+      throw new Error(`shape is not a child: ${child.getId()}`);
+    }
+    this.children.splice(oldIndex, 1);
+    const at = Math.min(Math.max(index, 0), this.children.length);
+    this.children.splice(at, 0, child);
+    return oldIndex;
+  }
+
   insertChildAt(index: number, child: Shape): void {
     this.children.splice(index, 0, child);
     child.bindParent(this);

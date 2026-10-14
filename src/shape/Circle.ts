@@ -29,6 +29,16 @@ export class Circle extends Shape {
     return { cx: this.cx, cy: this.cy, r: this.r };
   }
 
+  location(): string {
+    return `(${this.formatNumber(this.cx)},${this.formatNumber(this.cy)})`;
+  }
+
+  restoreSnapshot(values: Record<string, number | string>): void {
+    this.cx = this.asNumber(values.cx);
+    this.cy = this.asNumber(values.cy);
+    this.r = this.asNumber(values.r);
+  }
+
   toSvg(indent: string): string {
     return `${indent}<circle id="${this.escapeXml(this.getId())}" cx="${this.formatNumber(this.cx)}" cy="${this.formatNumber(this.cy)}" r="${this.formatNumber(this.r)}"${this.presentationAttributes()}/>`;
   }

@@ -66,6 +66,34 @@ export abstract class Shape {
 
   abstract toSvg(indent: string): string;
 
+  abstract location(): string;
+
+  abstract restoreSnapshot(values: Record<string, number | string>): void;
+
+  clearAttribute(name: string): void {
+    if (name === "fill") {
+      this.fillValue = undefined;
+      return;
+    }
+    if (name === "stroke") {
+      this.strokeValue = undefined;
+      return;
+    }
+    if (name === "stroke-width") {
+      this.strokeWidthValue = undefined;
+      return;
+    }
+    throw new Error(`unknown attribute: ${name}`);
+  }
+
+  protected asNumber(value: number | string | undefined): number {
+    const parsed = Number(value);
+    if (!Number.isFinite(parsed)) {
+      throw new Error(`invalid number: ${String(value)}`);
+    }
+    return parsed;
+  }
+
   protected abstract applyGeometry(name: string, value: string): boolean;
 
   protected abstract readGeometry(name: string): string | undefined;
