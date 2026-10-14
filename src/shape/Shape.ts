@@ -1,0 +1,107 @@
+export abstract class Shape {
+  private parent: Shape | null = null;
+  private fillValue: string | undefined;
+  private strokeValue: string | undefined;
+  private strokeWidthValue: string | undefined;
+
+  protected constructor(private readonly shapeId: string) {}
+
+  getId(): string {
+    return this.shapeId;
+  }
+
+  getParent(): Shape | null {
+    return this.parent;
+  }
+
+  bindParent(parent: Shape | null): void {
+    this.parent = parent;
+  }
+
+  isAncestorOf(other: Shape): boolean {
+    let current = other.getParent();
+    while (current !== null) {
+      if (current === this) {
+        return true;
+      }
+      current = current.getParent();
+    }
+    return false;
+  }
+
+  getFill(): string | undefined {
+    return this.fillValue;
+  }
+
+  getStroke(): string | undefined {
+    return this.strokeValue;
+  }
+
+  getStrokeWidth(): string | undefined {
+    return this.strokeWidthValue;
+  }
+
+  applyAttribute(name: string, value: string): void {
+    if (this.applyPresentation(name, value) || this.applyGeometry(name, value)) {
+      return;
+    }
+    throw new Error(`unknown attribute: ${name}`);
+  }
+
+  readAttribute(name: string): string | undefined {
+    const presentation = this.readPresentation(name);
+    if (presentation !== undefined) {
+      return presentation;
+    }
+    return this.readGeometry(name);
+  }
+
+  abstract kind(): string;
+
+  abstract move(dx: number, dy: number): void;
+
+  abstract scale(factor: number): void;
+
+  abstract snapshot(): Record<string, number | string>;
+
+  protected abstract applyGeometry(name: string, value: string): boolean;
+
+  protected abstract readGeometry(name: string): string | undefined;
+
+  protected parseNumber(value: string): number {
+    const parsed = Number(value);
+    if (!Number.isFinite(parsed)) {
+      throw new Error(`invalid number: ${value}`);
+    }
+    return parsed;
+  }
+
+  private applyPresentation(name: string, value: string): boolean {
+    if (name === "fill") {
+      this.fillValue = value;
+      return true;
+    }
+    if (name === "stroke") {
+      this.strokeValue = value;
+      return true;
+    }
+    if (name === "stroke-width") {
+      this.strokeWidthValue = value;
+      return true;
+    }
+    return false;
+  }
+
+  private readPresentation(name: string): string | undefined {
+    if (name === "fill") {
+      return this.fillValue;
+    }
+    if (name === "stroke") {
+      return this.strokeValue;
+    }
+    if (name === "stroke-width") {
+      return this.strokeWidthValue;
+    }
+    return undefined;
+  }
+}
