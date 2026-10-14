@@ -29,6 +29,10 @@ export class Circle extends Shape {
     return { cx: this.cx, cy: this.cy, r: this.r };
   }
 
+  treeDetail(): string {
+    return `cx=${this.formatNumber(this.cx)} cy=${this.formatNumber(this.cy)} r=${this.formatNumber(this.r)}${this.fillSuffix()}`;
+  }
+
   location(): string {
     return `(${this.formatNumber(this.cx)},${this.formatNumber(this.cy)})`;
   }

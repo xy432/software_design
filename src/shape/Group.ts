@@ -15,6 +15,10 @@ export class Group extends Shape {
     return this.children;
   }
 
+  treeDetail(): string {
+    return "";
+  }
+
   location(): string {
     return "";
   }
