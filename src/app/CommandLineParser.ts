@@ -10,7 +10,14 @@ export class CommandLineParser {
       if (char === undefined) {
         break;
       }
-      if (!inQuotes && char === "#") {
+      if (!inQuotes && !sawToken && char === "#") {
+        const word = line.slice(index).split(/[ \t]/)[0] ?? "";
+        if (/^#[0-9a-fA-F]{3,8}$/.test(word)) {
+          current = word;
+          sawToken = true;
+          index += word.length - 1;
+          continue;
+        }
         break;
       }
       if (char === '"') {

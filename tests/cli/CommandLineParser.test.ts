@@ -10,7 +10,7 @@ describe("CommandLineParser", () => {
     assert.equal(parser.parse("# build the flowchart"), null);
   });
 
-  it("drops an inline comment outside quotes and keeps quoted text", () => {
+  it("drops an inline comment outside quotes and keeps a hex color", () => {
     assert.deepEqual(parser.parse('create text title 20 40 "My Diagram" # caption'), [
       "create",
       "text",
@@ -18,6 +18,16 @@ describe("CommandLineParser", () => {
       "20",
       "40",
       "My Diagram",
+    ]);
+    assert.deepEqual(parser.parse("create rect bg 0 0 800 600 #ffffff"), [
+      "create",
+      "rect",
+      "bg",
+      "0",
+      "0",
+      "800",
+      "600",
+      "#ffffff",
     ]);
   });
 
