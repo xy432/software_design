@@ -31,6 +31,10 @@ export class Rect extends Shape {
     return { x: this.x, y: this.y, width: this.width, height: this.height };
   }
 
+  toSvg(indent: string): string {
+    return `${indent}<rect id="${this.escapeXml(this.getId())}" x="${this.formatNumber(this.x)}" y="${this.formatNumber(this.y)}" width="${this.formatNumber(this.width)}" height="${this.formatNumber(this.height)}"${this.presentationAttributes()}/>`;
+  }
+
   protected applyGeometry(name: string, value: string): boolean {
     const parsed = this.parseNumber(value);
     if (name === "x") {

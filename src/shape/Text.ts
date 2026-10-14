@@ -28,6 +28,10 @@ export class Text extends Shape {
     return { x: this.x, y: this.y, text: this.content };
   }
 
+  toSvg(indent: string): string {
+    return `${indent}<text id="${this.escapeXml(this.getId())}" x="${this.formatNumber(this.x)}" y="${this.formatNumber(this.y)}"${this.presentationAttributes()}>${this.escapeXml(this.content)}</text>`;
+  }
+
   protected applyGeometry(name: string, value: string): boolean {
     if (name === "text") {
       this.content = value;
